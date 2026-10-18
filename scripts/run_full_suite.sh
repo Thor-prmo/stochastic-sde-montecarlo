@@ -17,7 +17,7 @@ MPLCONFIGDIR=/tmp python3 -m pytest tests/ -v
 
 echo "[4/4] Generating High-DPI Figures & 2-Page Technical Note PDF..."
 MPLCONFIGDIR=/tmp python3 scripts/reproduce_all_figures.py
-MPLCONFIGDIR=/tmp python3 scripts/build_technical_note.py
+(cd paper && pdflatex -interaction=nonstopmode main.tex >/dev/null && pdflatex -interaction=nonstopmode main.tex >/dev/null && cp main.pdf ../Technical_Note.pdf)
 
 echo "All benchmarks, tests, figures, and Technical_Note.pdf completed successfully."
 

@@ -18,6 +18,9 @@ test: build
 plots: build
 	MPLCONFIGDIR=/tmp python3 scripts/reproduce_all_figures.py
 
+paper: plots
+	cd paper && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex && cp main.pdf ../Technical_Note.pdf
+
 reproduce:
 	bash scripts/run_full_suite.sh
 
