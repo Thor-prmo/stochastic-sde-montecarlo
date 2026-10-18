@@ -1,0 +1,30 @@
+# Build directories and compiled binaries
+build/
+bin/
+*.o
+*.so
+*.a
+main_benchmark
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# LaTeX build files
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# OS / Editor temporary files
+.DS_Store
+*.swp
+*~
