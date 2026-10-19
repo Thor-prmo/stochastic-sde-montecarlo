@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Tests: Pytest](https://img.shields.io/badge/tests-pytest%20passing-brightgreen.svg)]()
 
-A quantitative finance and applied probability library implementing **compiled C++17 Expectation-Maximization (EM) calibration for Gaussian Mixture Models (GMM)** with missing-history IPO backfill, **Antithetic and Control-Variate Monte Carlo barrier option pricing**, **continuous-time Markov generator credit-migration models**, and **Fokker–Planck / Euler–Maruyama Langevin SDE solvers**.
+A quantitative finance and applied probability library implementing **compiled C++17 Expectation-Maximization (EM) calibration for Gaussian Mixture Models (GMM)** with missing-history IPO backfill, **Antithetic and Control-Variate Monte Carlo barrier option pricing**, **continuous-time Markov generator credit-migration models**, and **Fokker-Planck / Euler-Maruyama Langevin SDE solvers**.
 
 📄 **[Read the 2-Page Technical Note (`Technical_Note.pdf`)](Technical_Note.pdf)** | **[LaTeX Source (`paper/main.tex`)](paper/main.tex)**
 
@@ -16,7 +16,7 @@ A quantitative finance and applied probability library implementing **compiled C
 | GMM Tail Calibration & 99% VaR Backfill | Antithetic + Control Variate Barrier Option MC |
 | :---: | :---: |
 | ![GMM Tail VaR](figures/fig1_gmm_qq_and_tail_var.png) | ![Barrier MC](figures/fig2_mc_variance_reduction_convergence.png) |
-| **Fokker–Planck PDE vs. Euler–Maruyama SDE Density** | **Continuous-Time Generator Credit Migration & CDS** |
+| **Fokker-Planck PDE vs. Euler-Maruyama SDE Density** | **Continuous-Time Generator Credit Migration & CDS** |
 | ![Fokker-Planck SDE](figures/fig3_fokker_planck_density_and_msd.png) | ![Credit Migration](figures/fig4_credit_migration_term_structure.png) |
 
 ---
@@ -37,15 +37,15 @@ $$\hat{r}_{t,2}^{(k)} = \mu_{k,2} + \Sigma_{k,21}\Sigma_{k,11}^{-1}(r_{t,1} - \m
 
 ### 2. Variance-Reduced Barrier Option Pricing (`cpp_core/src/barrier_mc.cpp`)
 
-Under risk-neutral Geometric Brownian Motion $dS_t = r S_t\,dt + \sigma S_t\,dW_t^{\mathbb{Q}}$, let $Y_i = e^{-rT}\mathbb{I}_{\{\tau_B > T\}}(S_T^{(i)} - K)^+$ denote the discounted payoff of an Up-and-Out or Down-and-Out call option with discrete monitoring correction $B_{\text{adj}} = B \exp(\pm \beta_{\text{BGM}} \sigma \sqrt{\Delta t})$ ($\beta_{\text{BGM}} = -\zeta(1/2)/\sqrt{2\pi} \approx 0.5826$). We combine Antithetic Variates $(Z, -Z)$ with a vanilla Black–Scholes Control Variate $C_i = e^{-rT}(S_T^{(i)} - K)^+$ whose analytical expectation $\mathbb{E}^{\mathbb{Q}}[C] = C_{\text{BS}}(S_0, K, T, r, \sigma)$ is known in closed form:
+Under risk-neutral Geometric Brownian Motion $dS_t = r S_t\,dt + \sigma S_t\,dW_t^{\mathbb{Q}}$, let $Y_i = e^{-rT}\mathbb{I}_{\{\tau_B > T\}}(S_T^{(i)} - K)^+$ denote the discounted payoff of an Up-and-Out or Down-and-Out call option with discrete monitoring correction $B_{\text{adj}} = B \exp(\pm \beta_{\text{BGM}} \sigma \sqrt{\Delta t})$ ($\beta_{\text{BGM}} = -\zeta(1/2)/\sqrt{2\pi} \approx 0.5826$). We combine Antithetic Variates $(Z, -Z)$ with a vanilla Black-Scholes Control Variate $C_i = e^{-rT}(S_T^{(i)} - K)^+$ whose analytical expectation $\mathbb{E}^{\mathbb{Q}}[C] = C_{\text{BS}}(S_0, K, T, r, \sigma)$ is known in closed form:
 
 $$\hat{\theta}_{\text{CV}} = \bar{Y}_{\text{anti}} - \hat{b}^* \left( \bar{C}_{\text{anti}} - C_{\text{BS}} \right), \qquad \hat{b}^* = \frac{\mathrm{Cov}(Y_{\text{anti}}, C_{\text{anti}})}{\mathrm{Var}(C_{\text{anti}})}, \qquad \mathrm{Var}(\hat{\theta}_{\text{CV}}) = (1 - \rho_{YC}^2)\mathrm{Var}(\bar{Y}_{\text{anti}})$$
 
 ---
 
-### 3. Drift–Diffusion–Jump SDEs & Fokker–Planck PDE (`sde_langevin_fokker_planck.py`)
+### 3. Drift-Diffusion-Jump SDEs & Fokker-Planck PDE (`sde_langevin_fokker_planck.py`)
 
-Starting from the differential Chapman–Kolmogorov equation for a continuous-time Markov process with drift $A(x,t)$, diffusion $B(x,t) = \sigma^2(x,t)$, and jump intensity $W(x \mid x', t)$, the probability density $p(x,t)$ for an Ornstein–Uhlenbeck Langevin process $dX_t = -\theta X_t\,dt + \sigma\,dW_t$ satisfies the Fokker–Planck PDE:
+Starting from the differential Chapman-Kolmogorov equation for a continuous-time Markov process with drift $A(x,t)$, diffusion $B(x,t) = \sigma^2(x,t)$, and jump intensity $W(x \mid x', t)$, the probability density $p(x,t)$ for an Ornstein-Uhlenbeck Langevin process $dX_t = -\theta X_t\,dt + \sigma\,dW_t$ satisfies the Fokker-Planck PDE:
 
 $$\frac{\partial p(x,t)}{\partial t} = \theta \frac{\partial}{\partial x}\big(x\,p(x,t)\big) + \frac{\sigma^2}{2}\frac{\partial^2 p(x,t)}{\partial x^2} \quad \Longrightarrow \quad p(x,t \mid x_0) = \mathcal{N}\!\left(x_0 e^{-\theta t}, \; \frac{\sigma^2}{2\theta}\big(1 - e^{-2\theta t}\big)\right)$$
 
@@ -100,8 +100,8 @@ stochastic-sde-montecarlo/
 | :--- | :--- | :--- | :--- |
 | **C++17 GMM Path Simulation** | Wall-Clock Runtime Speedup | Vectorized Python Baseline ($10^6$ paths) | **4.2$\times$** speedup |
 | **GMM EM Tail Calibration** | Out-of-Sample KL Divergence & 99% VaR | Single-Gaussian Fit / Empirical Tail | **-31.4%** KL divergence, VaR error **1.8%** |
-| **Barrier Option Monte Carlo** | Variance Reduction & Pricing Error | Crude MC / Analytical Reiner–Rubinstein | **3.8$\times$** variance reduction, **0.12%** error |
-| **Langevin SDE Discretization** | Free-Diffusion MSD Slope $\langle X_t^2 \rangle = 2Dt$ | Analytical Fokker–Planck Moment ($10^5$ paths) | **0.38%** relative error ($<0.4\%$ bound) |
+| **Barrier Option Monte Carlo** | Variance Reduction & Pricing Error | Crude MC / Analytical Reiner-Rubinstein | **3.8$\times$** variance reduction, **0.12%** error |
+| **Langevin SDE Discretization** | Free-Diffusion MSD Slope $\langle X_t^2 \rangle = 2Dt$ | Analytical Fokker-Planck Moment ($10^5$ paths) | **0.38%** relative error ($<0.4\%$ bound) |
 | **Generator Credit Migration** | Term-Structure CDS Spread Fit | Empirical Sovereign CDS Par Spreads | Within **15 bps** across maturities |
 
 ---
